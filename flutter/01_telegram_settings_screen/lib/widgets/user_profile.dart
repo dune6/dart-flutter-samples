@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class UserProfile extends StatelessWidget {
   UserProfile();
 
-  final List<MenuRowData> fristMenuRow = [
+  final List<MenuRowData> firstMenuRow = [
     MenuRowData(Icons.favorite, 'Избранное'),
     MenuRowData(Icons.phone, 'Недавние звонки'),
     MenuRowData(Icons.computer, 'Устройства'),
@@ -35,7 +35,7 @@ class UserProfile extends StatelessWidget {
             const _UserInfo(),
             const SizedBox(height: 20,),
             _MenuWidget(
-              menuRow: fristMenuRow,
+              menuRow: firstMenuRow,
             ),
             const SizedBox(height: 20,),
             _MenuWidget(menuRow: secondMenuRow)
