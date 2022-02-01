@@ -18,27 +18,46 @@ class UserProfile extends StatelessWidget {
     MenuRowData(Icons.language, 'Язык'),
   ];
 
+  final List<MenuRowData> thirdMenuRow = [
+    MenuRowData(Icons.watch, 'Android Watch'),
+  ];
+
+  final List<MenuRowData> fourthMenuRow = [
+    MenuRowData(Icons.help, 'Помощь'),
+    MenuRowData(Icons.question_answer_rounded, 'Вопросы о Application'),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: const Color.fromARGB(255, 238, 236, 243),
       appBar: AppBar(
         centerTitle: true,
         title: const Text('Настройки'),
       ),
       body: SizedBox(
         width: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: ListView(
           children: [
             const _UserInfo(),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             _MenuWidget(
               menuRow: firstMenuRow,
             ),
-            const SizedBox(height: 20,),
-            _MenuWidget(menuRow: secondMenuRow)
+            const SizedBox(
+              height: 20,
+            ),
+            _MenuWidget(menuRow: secondMenuRow),
+            const SizedBox(
+              height: 20,
+            ),
+            _MenuWidget(menuRow: thirdMenuRow),
+            const SizedBox(
+              height: 20,
+            ),
+            _MenuWidget(menuRow: fourthMenuRow)
           ],
         ),
       ),
@@ -104,33 +123,42 @@ class _UserInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      color: Colors.white,
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 5),
-        child: Column(
-          children: const [
-            SizedBox(
-              height: 20,
-            ),
-            _AvatarWidget(),
-            SizedBox(
-              height: 20,
-            ),
-            _UserNameWidget(),
-            SizedBox(
-              height: 10,
-            ),
-            _UserPhoneWidget(),
-            SizedBox(
-              height: 10,
-            ),
-            _UserNicknameWidget(),
-          ],
+    return Stack(children: [
+      Container(
+        width: double.infinity,
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 5),
+          child: Column(
+            children: const [
+              SizedBox(
+                height: 20,
+              ),
+              _AvatarWidget(),
+              SizedBox(
+                height: 20,
+              ),
+              _UserNameWidget(),
+              SizedBox(
+                height: 10,
+              ),
+              _UserPhoneWidget(),
+              SizedBox(
+                height: 10,
+              ),
+              _UserNicknameWidget(),
+            ],
+          ),
         ),
       ),
-    );
+      const Positioned(
+          top: 20,
+          right: 20,
+          child: Text(
+            'Изм.',
+            style: TextStyle(color: Colors.blue, fontSize: 17),
+          ))
+    ]);
   }
 }
 
