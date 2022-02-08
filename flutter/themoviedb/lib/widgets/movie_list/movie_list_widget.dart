@@ -26,49 +26,49 @@ class _MovieListWidgetState extends State<MovieListWidget> {
   final _movies = [
     Movie(
       imageName: Images.dune,
-      title: 'Записки баскетболиста',
+      title: 'Basketball',
       date: 'April 22, 2003',
       description:
           'This film about something... This film about something... This film about something... This film about something...',
     ),
     Movie(
       imageName: Images.dune,
-      title: 'Начало',
+      title: 'Interception',
       date: 'April 22, 2003',
       description:
           'This film about something... This film about something... This film about something... This film about something...',
     ),
     Movie(
       imageName: Images.dune,
-      title: 'Эквилибриум',
+      title: 'Equilibrium',
       date: 'April 22, 2003',
       description:
           'This film about something... This film about something... This film about something... This film about something...',
     ),
     Movie(
       imageName: Images.dune,
-      title: 'Социальная сеть',
+      title: 'Social network',
       date: 'April 22, 2003',
       description:
           'This film about something... This film about something... This film about something... This film about something...',
     ),
     Movie(
       imageName: Images.dune,
-      title: 'Большой куш',
+      title: 'Big jackpot',
       date: 'April 22, 2003',
       description:
           'This film about something... This film about something... This film about something... This film about something...',
     ),
     Movie(
       imageName: Images.dune,
-      title: 'Джентельмены',
+      title: 'Gents',
       date: 'April 22, 2003',
       description:
           'This film about something... This film about something... This film about something... This film about something...',
     ),
     Movie(
       imageName: Images.dune,
-      title: 'Маяк',
+      title: 'Lighthouse',
       date: 'April 22, 2003',
       description:
           'This film about something... This film about something... This film about something... This film about something...',
@@ -83,7 +83,7 @@ class _MovieListWidgetState extends State<MovieListWidget> {
     final query = _searchController.text;
     if (query.isNotEmpty) {
       _filteredMovies =
-          _movies.where((element) => element.title.toLowerCase().contains(query.toUpperCase())).toList();
+          _movies.where((Movie movie) => movie.title.toLowerCase().contains(query.toLowerCase())).toList();
     } else {
       _filteredMovies = _movies;
     }
