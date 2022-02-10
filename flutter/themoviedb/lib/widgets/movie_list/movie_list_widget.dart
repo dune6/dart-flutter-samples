@@ -1,15 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:themoviedb/resources/resources.dart';
 
 class Movie {
+  final int id;
   final String imageName;
   final String title;
   final String date;
   final String description;
 
   Movie(
-      {required this.imageName,
+      {required this.id,
+      required this.imageName,
       required this.title,
       required this.date,
       required this.description});
@@ -25,6 +26,7 @@ class MovieListWidget extends StatefulWidget {
 class _MovieListWidgetState extends State<MovieListWidget> {
   final _movies = [
     Movie(
+      id: 1,
       imageName: Images.dune,
       title: 'Basketball',
       date: 'April 22, 2003',
@@ -32,6 +34,7 @@ class _MovieListWidgetState extends State<MovieListWidget> {
           'This film about something... This film about something... This film about something... This film about something...',
     ),
     Movie(
+      id: 2,
       imageName: Images.dune,
       title: 'Interception',
       date: 'April 22, 2003',
@@ -39,6 +42,7 @@ class _MovieListWidgetState extends State<MovieListWidget> {
           'This film about something... This film about something... This film about something... This film about something...',
     ),
     Movie(
+      id: 3,
       imageName: Images.dune,
       title: 'Equilibrium',
       date: 'April 22, 2003',
@@ -46,6 +50,7 @@ class _MovieListWidgetState extends State<MovieListWidget> {
           'This film about something... This film about something... This film about something... This film about something...',
     ),
     Movie(
+      id: 4,
       imageName: Images.dune,
       title: 'Social network',
       date: 'April 22, 2003',
@@ -53,6 +58,7 @@ class _MovieListWidgetState extends State<MovieListWidget> {
           'This film about something... This film about something... This film about something... This film about something...',
     ),
     Movie(
+      id: 5,
       imageName: Images.dune,
       title: 'Big jackpot',
       date: 'April 22, 2003',
@@ -60,6 +66,7 @@ class _MovieListWidgetState extends State<MovieListWidget> {
           'This film about something... This film about something... This film about something... This film about something...',
     ),
     Movie(
+      id: 6,
       imageName: Images.dune,
       title: 'Gents',
       date: 'April 22, 2003',
@@ -67,6 +74,7 @@ class _MovieListWidgetState extends State<MovieListWidget> {
           'This film about something... This film about something... This film about something... This film about something...',
     ),
     Movie(
+      id: 7,
       imageName: Images.dune,
       title: 'Lighthouse',
       date: 'April 22, 2003',
@@ -82,8 +90,10 @@ class _MovieListWidgetState extends State<MovieListWidget> {
   void _searchMovies() {
     final query = _searchController.text;
     if (query.isNotEmpty) {
-      _filteredMovies =
-          _movies.where((Movie movie) => movie.title.toLowerCase().contains(query.toLowerCase())).toList();
+      _filteredMovies = _movies
+          .where((Movie movie) =>
+              movie.title.toLowerCase().contains(query.toLowerCase()))
+          .toList();
     } else {
       _filteredMovies = _movies;
     }
@@ -95,6 +105,12 @@ class _MovieListWidgetState extends State<MovieListWidget> {
     super.initState();
     _filteredMovies = _movies;
     _searchController.addListener(_searchMovies);
+  }
+
+  void _onMovieTap(int index) {
+    final id = _movies[index].id;
+    Navigator.of(context)
+        .pushNamed('/main_screen/movie_details_widget', arguments: id);
   }
 
   @override
@@ -175,7 +191,7 @@ class _MovieListWidgetState extends State<MovieListWidget> {
                   color: Colors.transparent,
                   child: InkWell(
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    onTap: () {},
+                    onTap: () => _onMovieTap(index),
                   ),
                 )
               ],
