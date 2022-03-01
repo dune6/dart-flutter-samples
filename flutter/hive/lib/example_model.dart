@@ -1,10 +1,32 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 part 'example_model.g.dart';
 
 class ExampleWidgetModel {
+  void doSomeSecure() async {
+    const secureStorage = FlutterSecureStorage();
+    // if key not exists return null
+    final encryprionKey = await secureStorage.read(key: 'key');
+    if (encryprionKey == null) {
+      final key = Hive.generateSecureKey();
+      await secureStorage.write(
+        key: 'key',
+        value: base64UrlEncode(key),
+      );
+    }
+    final key = await secureStorage.read(key: 'key');
+    final encryptionKey = base64Url.decode(key!);
+    print('Encryption key: $encryptionKey');
+    final encryptedBox = await Hive.openBox('vaultBox',
+        encryptionCipher: HiveAesCipher(encryptionKey));
+    await encryptedBox.put('secret', 'Hive is cool');
+    print(encryptedBox.get('secret'));
+  }
 
   void doSome() async {
     // // box - коллекция
@@ -18,11 +40,11 @@ class ExampleWidgetModel {
     //
     // // other methods...
 
-    if (!Hive.isAdapterRegistered(0)){
+    if (!Hive.isAdapterRegistered(0)) {
       Hive.registerAdapter(UserAdapter());
     }
 
-    if (!Hive.isAdapterRegistered(1)){
+    if (!Hive.isAdapterRegistered(1)) {
       Hive.registerAdapter(PetAdapter());
     }
     // Hive.deleteBoxFromDisk('testBox');
@@ -32,7 +54,7 @@ class ExampleWidgetModel {
     final pet2 = Pet('Melissa');
 
     petBox.addAll([pet1, pet2]);
-    final pets =  HiveList(petBox, objects: [pet1, pet2]);
+    final pets = HiveList(petBox, objects: [pet1, pet2]);
     final user = User('Sam3', 53, pets);
     await box.put('user', user);
     print(box.values);
