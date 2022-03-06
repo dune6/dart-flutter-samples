@@ -81,7 +81,7 @@ class _GroupListRowWidget extends StatelessWidget {
         ],
       ),
       child: ListTile(
-        onTap: () {},
+        onTap: () => model.showTasks(context, indexList),
         title: Text(group.name),
         trailing: const Icon(Icons.chevron_right),
       ),
