@@ -7,11 +7,9 @@ class TaskFormWidgetModel {
   int groupKey;
   var taskText = '';
 
-  TaskFormWidgetModel(this.groupKey) {
+  TaskFormWidgetModel(this.groupKey) {}
 
-  }
-
-  void saveGroup(BuildContext context) async {
+  void saveTask(BuildContext context) async {
     if (taskText.isEmpty) return;
     if (!Hive.isAdapterRegistered(0)) {
       Hive.registerAdapter(GroupAdapter());
@@ -25,8 +23,36 @@ class TaskFormWidgetModel {
 
     final groupBox = await Hive.openBox<Group>('groups_box');
     final group = groupBox.get(groupKey);
-    group.
+    group?.addTask(tasksBox, task);
 
     Navigator.of(context).pop();
+  }
+}
+
+
+class TasksFormWidgetModelProvider extends InheritedWidget {
+  final TaskFormWidgetModel model;
+
+  const TasksFormWidgetModelProvider({
+    Key? key,
+    required this.model,
+    required Widget child,
+  }) : super(key: key, child: child);
+
+  static TasksFormWidgetModelProvider? watch(BuildContext context) {
+    return context
+        .dependOnInheritedWidgetOfExactType<TasksFormWidgetModelProvider>();
+  }
+
+  static TasksFormWidgetModelProvider? read(BuildContext context) {
+    final widget = context
+        .getElementForInheritedWidgetOfExactType<TasksFormWidgetModelProvider>()
+        ?.widget;
+    return widget is TasksFormWidgetModelProvider ? widget : null;
+  }
+
+  @override
+  bool updateShouldNotify(TasksFormWidgetModelProvider old) {
+    return false;
   }
 }
