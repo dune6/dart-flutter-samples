@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_list/domain/entities/group.dart';
+import 'package:todo_list/domain/entities/task.dart';
 
 class GroupsWidgetModel extends ChangeNotifier {
   var _groups = <Group>[];
@@ -38,8 +39,13 @@ class GroupsWidgetModel extends ChangeNotifier {
     if (!Hive.isAdapterRegistered(0)) {
       Hive.registerAdapter(GroupAdapter());
     }
+    if (!Hive.isAdapterRegistered(1)) {
+      Hive.registerAdapter(TaskAdapter());
+    }
+    Hive.openBox<Task>('tasks_box');
     final box = await Hive.openBox<Group>('groups_box');
-
+    await box.getAt(index)?.tasks?.deleteAllFromHive();
+    
     await box.deleteAt(index);
   }
 
