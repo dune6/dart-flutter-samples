@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_list/domain/entities/group.dart';
 import 'package:todo_list/domain/entities/task.dart';
+import 'package:todo_list/ui/navigation/main_navigation.dart';
 
 class TasksWidgetModel extends ChangeNotifier {
   int groupKey;
@@ -17,7 +18,7 @@ class TasksWidgetModel extends ChangeNotifier {
 
   Group? get group => _group;
 
-  TasksWidgetModel(this.groupKey) {
+  TasksWidgetModel({required this.groupKey}) {
     _setup();
   }
 
@@ -28,7 +29,7 @@ class TasksWidgetModel extends ChangeNotifier {
   }
 
   void showForm(BuildContext context) {
-    Navigator.of(context).pushNamed('/groups/tasks/form', arguments: groupKey);
+    Navigator.of(context).pushNamed(MainNavigationRoutes.tasksForm, arguments: groupKey);
   }
 
   void _setupListen() async {

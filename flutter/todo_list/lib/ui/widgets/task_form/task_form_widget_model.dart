@@ -7,7 +7,7 @@ class TaskFormWidgetModel {
   int groupKey;
   var taskText = '';
 
-  TaskFormWidgetModel(this.groupKey) {}
+  TaskFormWidgetModel({required this.groupKey}) {}
 
   void saveTask(BuildContext context) async {
     if (taskText.isEmpty) return;
