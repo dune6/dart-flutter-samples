@@ -13,6 +13,12 @@ class _GroupsWidgetState extends State<GroupsWidget> {
   final _model = GroupsWidgetModel();
 
   @override
+  Future<void> dispose() async {
+    _model.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GroupsWidgetModelProvider(
         model: _model, child: const _GroupWidgetBody());
@@ -50,7 +56,9 @@ class _GroupListWidget extends StatelessWidget {
         return _GroupListRowWidget(indexList: index);
       },
       separatorBuilder: (BuildContext context, int index) {
-        return const Divider(height: 1,);
+        return const Divider(
+          height: 1,
+        );
       },
     );
   }
@@ -81,7 +89,7 @@ class _GroupListRowWidget extends StatelessWidget {
         ],
       ),
       child: ListTile(
-        onTap: () => model.showTasks(context, indexList),
+        onTap: () async => {model.showTasks(context, indexList)},
         title: Text(group.name),
         trailing: const Icon(Icons.chevron_right),
       ),

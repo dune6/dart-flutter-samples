@@ -21,10 +21,10 @@ class MainNavigation {
   Route<Object> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case MainNavigationRoutes.tasks:
-        final groupKey = settings.arguments as int;
+        final configuration = settings.arguments as TaskWidgetConfiguration;
         return MaterialPageRoute(
           builder: (context) {
-            return TaskWidget(groupKey: groupKey);
+            return TaskWidget(configuration: configuration,);
           },
         );
       case MainNavigationRoutes.tasksForm:

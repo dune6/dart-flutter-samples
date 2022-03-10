@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:todo_list/domain/entities/group.dart';
+import 'package:todo_list/domain/data_provider/box_manager.dart';
 import 'package:todo_list/domain/entities/task.dart';
 
 class TaskFormWidgetModel {
@@ -11,24 +10,12 @@ class TaskFormWidgetModel {
 
   void saveTask(BuildContext context) async {
     if (taskText.isEmpty) return;
-    if (!Hive.isAdapterRegistered(0)) {
-      Hive.registerAdapter(GroupAdapter());
-    }
-    if (!Hive.isAdapterRegistered(1)) {
-      Hive.registerAdapter(TaskAdapter());
-    }
-    final tasksBox = await Hive.openBox<Task>('tasks_box');
+    final box = await BoxManager.instance.openTasksBox(groupKey);
     final task = Task(text: taskText, isDone: false);
-    await tasksBox.add(task);
-
-    final groupBox = await Hive.openBox<Group>('groups_box');
-    final group = groupBox.get(groupKey);
-    group?.addTask(tasksBox, task);
-
+    await box.add(task);
     Navigator.of(context).pop();
   }
 }
-
 
 class TasksFormWidgetModelProvider extends InheritedWidget {
   final TaskFormWidgetModel model;
@@ -53,6 +40,6 @@ class TasksFormWidgetModelProvider extends InheritedWidget {
 
   @override
   bool updateShouldNotify(TasksFormWidgetModelProvider old) {
-    return false;
+    return true;
   }
 }
