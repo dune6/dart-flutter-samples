@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:themoviedb/theme/app_colors.dart';
+import 'package:themoviedb/widgets/auth/auth_widget_model.dart';
 import 'package:themoviedb/widgets/movie_details/movie_details_widget.dart';
 
 import 'widgets/auth/auth_widget.dart';
@@ -29,14 +30,17 @@ class MyApp extends StatelessWidget {
         ),
       ),
       routes: {
-        '/': (context) => const AuthWidget(),
+        '/': (context) => AuthModelProvider(
+              child: const AuthWidget(),
+              model: AuthModel(),
+            ),
         '/main_screen': (context) => const MainScreenWidget(),
         '/main_screen/movie_details_widget': (context) {
           final arguments = ModalRoute.of(context)?.settings.arguments as int;
           if (arguments is int) {
             return MovieDetailsWidget(movieId: arguments);
-          } else{
-            return MovieDetailsWidget(movieId: 0);
+          } else {
+            return const MovieDetailsWidget(movieId: 0);
           }
         }
       },
@@ -44,13 +48,10 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: (RouteSettings settings) {
         return MaterialPageRoute(builder: (context) {
           return Scaffold(
-            appBar: AppBar(
-              title: const Text('Ошибка навигации'),
-            ),
-              body: const Center(
-                  child: Text('Ошибка навигации')
-              )
-          );
+              appBar: AppBar(
+                title: const Text('Ошибка навигации'),
+              ),
+              body: const Center(child: Text('Ошибка навигации')));
         });
       },
     );
